@@ -1,0 +1,62 @@
+
+https://cloud.digitalocean.com/login  johnson.maurice98@gmail.com/Deja_0316
+
+ubuntu server: mj-ubuntu-jenkins 167.172.235.161 root/root01Pw
+
+Jenkins url http://167.172.235.161:8080/
+
+Jenkins admin pw 4f7bd6669e404e5797f8967f6bfc84c5
+
+Jenkins user is mjohnson/Deja_0316
+
+START JENKINS-DOCKER
+Docker command for Jenkins/Docker when Jenkins is launched from Docker and you want the app to access the same docker:
+docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins -d jenkins-docker
+
+STOP JENKINS-DOCKER
+docker stop jenkins
+docker rm jenkins
+
+run in background:
+docker run -p 3000:3000 -d mjatcars/docker-nodejs-demo
+
+test on linux: curl localhost:3000
+
+test in url:  http://167.172.235.161:3000
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+--  For https://www.udemy.com/course/learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/learn/lecture/7264438#questions
+---------------------------------------------------------------------------------------------------------------------------------
+
+docker network create jenkins2
+
+docker volume create jenkins-docker-certs2
+
+docker volume create jenkins-data2
+
+docker container run --name jenkins-docker2 --rm --detach \
+  --privileged --network jenkins2 --network-alias docker \
+  --env DOCKER_TLS_CERTDIR=/certs \
+  --volume jenkins-docker-certs2:/certs/client \
+  --volume jenkins-data2:/var/jenkins_home \
+  --volume "$HOME":/home docker:dind
+
+
+docker container run --name jenkins-tutorial2 --rm --detach   --network jenkins2 --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   --volume jenkins-data2:/var/jenkins_home   --volume jenkins-docker-certs2:/certs/client:ro   --volume "$HOME":/home   --publish 8080:8080 jenkinsci/blueocean
+
+JENKINS ADMIN PASSWORD:
+cat /var/lib/docker/volumes/jenkins-data2/_data/secrets/initialAdminPassword
+628d0a985f984e7fb9aa2f35a8125a02
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+https://www.jenkins.io/doc/tutorials/build-a-python-app-with-pyinstaller/
+---------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
